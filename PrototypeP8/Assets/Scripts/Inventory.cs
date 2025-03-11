@@ -8,7 +8,8 @@ using UnityEngine.UI;
 public class Inventory : MonoBehaviour
 {
     [SerializeField]
-    private List<GameObject> absorbedObjectList; // pour opti pas besoin de stocker le gameobject
+    private List<GameObject> absorbedObjectList = new List<GameObject>(); // pour opti pas besoin de stocker le gameobject
+    private List<GameObject> absorbedObjectListOnInventory = new List<GameObject>(); // pour opti pas besoin de stocker le gameobject
 
     [SerializeField]
     private RawImage inventoryScreen;
@@ -40,10 +41,13 @@ public class Inventory : MonoBehaviour
         if (!inventoryIsOpen)
         {
             inventoryScreen.gameObject.SetActive(true);
+            InventoryOpen();
             inventoryIsOpen = true;
+  
         }
         else
         {
+            InventoryClose();
             inventoryScreen.gameObject.SetActive(false);
             inventoryIsOpen = false;
         }
@@ -54,6 +58,14 @@ public class Inventory : MonoBehaviour
         foreach (GameObject obj in absorbedObjectList)
         {
             GameObject newObj = Instantiate(itemFramePrefab, panelInventory.transform);
+            absorbedObjectListOnInventory.Add(newObj);
+        }
+    }
+    public void InventoryClose()
+    {
+        foreach (GameObject obj in absorbedObjectListOnInventory)
+        {
+            GameObject.Destroy(obj);
         }
     }
 
