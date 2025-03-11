@@ -53,7 +53,7 @@ public class Inventory : MonoBehaviour
     {
         foreach (GameObject obj in absorbedObjectList)
         {
-            //GameObject newObj = Instantiate();
+            GameObject newObj = Instantiate(itemFramePrefab, panelInventory.transform);
         }
     }
 
