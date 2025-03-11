@@ -19,6 +19,8 @@ public class CubeGlouton : MonoBehaviour
     private bool isInvulnerable;
     private Vector3 attachDirection;
 
+    private int jumpLeft = 2;
+
     public AudioClip sonMiam;
 
     public bool IsSprinting
@@ -41,15 +43,23 @@ public class CubeGlouton : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space) && canDetach)
             {
                 DetachFromWall();
+                Jump();
             }
             return;
         }
 
+        if (Input.GetKeyDown(KeyCode.Space) && !isGrounded && jumpLeft > 0)
+        {
+            Jump();
+            jumpLeft--;
+        }
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
-            rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
+            Jump();
             isGrounded = false;
+            jumpLeft--; 
         }
+
 
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
@@ -79,12 +89,18 @@ public class CubeGlouton : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
+            jumpLeft = 2;
             ResetVelocity();
         }
         else if (collision.gameObject.CompareTag("Wall") && !isInvulnerable)
         {
             AttachToWall(collision.contacts[0].normal);
         }
+    }
+
+    private void Jump()
+    {
+        rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
     }
 
     private void AttachToWall(Vector3 collisionNormal)
@@ -117,9 +133,21 @@ public class CubeGlouton : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Nourriture"))
+        if (other.CompareTag("FoodTall"))
         {
             transform.localScale += new Vector3(tailleAugmentee, tailleAugmentee, tailleAugmentee);
+            vitesse += 1;
+            vitesseAugmentee += 1;
+            if (sonMiam != null)
+            {
+                audioSource.PlayOneShot(sonMiam);
+            }
+
+            other.GetComponent<Nourriture>().Respawn();
+        }
+        if (other.CompareTag("FoodSmall") && transform.localScale.x > 0.1)
+        {
+            transform.localScale -= new Vector3(tailleAugmentee, tailleAugmentee, tailleAugmentee);
             vitesse += 1;
             vitesseAugmentee += 1;
             if (sonMiam != null)

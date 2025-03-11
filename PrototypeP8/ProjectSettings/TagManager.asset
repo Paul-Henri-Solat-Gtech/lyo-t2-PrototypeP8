@@ -8,6 +8,9 @@ TagManager:
   - Ground
   - CubeGlouton
   - Nourriture
+  - FoodSmall
+  - FoodTall
+  - ObjectToAbsorb
   layers:
   - Default
   - TransparentFX
