@@ -73,7 +73,11 @@ public class Inventory : MonoBehaviour
     {
         if (other.CompareTag("ObjectToAbsorb"))
         {
-            absorbedObjectList.Add(other.GameObject());
+            if (other.transform.localScale.x <= transform.localScale.x)
+            {
+                absorbedObjectList.Add(other.GameObject());
+                GameObject.Destroy(other.GameObject());
+            }
         }
     }
 }
