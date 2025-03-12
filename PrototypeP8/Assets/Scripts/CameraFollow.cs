@@ -3,31 +3,30 @@ using UnityEngine;
 public class CameraFollow : MonoBehaviour
 {
     public Transform cible;
-    public float normalFOV = 60f;
-    public Vector3 offset = new Vector3(0, 3, -3); 
-
-    public float sprintFOV = 90f;
-    private Camera cam;
-    private CubeGlouton cubeGlouton;
+    public float distance = 5.0f;
+    public float hauteur = 2.0f;
+    public float sensibilitéRotation = 5.0f;
+    private float rotationY = 0.0f;
+    private float rotationX = 0.0f;
 
     void Start()
     {
-        cam = GetComponent<Camera>();
-        cubeGlouton = cible.GetComponent<CubeGlouton>();
+        Vector3 angles = transform.eulerAngles;
+        rotationY = angles.y;
+        rotationX = angles.x;
+        Cursor.lockState = CursorLockMode.Locked; 
     }
 
     void LateUpdate()
     {
-        transform.position = cible.position + offset;
-        transform.LookAt(cible);
+        rotationY += Input.GetAxis("Mouse X") * sensibilitéRotation;
+        rotationX -= Input.GetAxis("Mouse Y") * sensibilitéRotation;
+        rotationX = Mathf.Clamp(rotationX, -20f, 80f); 
 
-        if (cubeGlouton != null && cubeGlouton.IsSprinting)
-        {
-            cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, sprintFOV, Time.deltaTime * 2);
-        }
-        else
-        {
-            cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, normalFOV, Time.deltaTime * 2);
-        }
+        Quaternion rotation = Quaternion.Euler(rotationX, rotationY, 0);
+        Vector3 position = cible.position - (rotation * Vector3.forward * distance) + Vector3.up * hauteur;
+
+        transform.rotation = rotation;
+        transform.position = position;
     }
 }

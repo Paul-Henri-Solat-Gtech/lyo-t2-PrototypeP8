@@ -81,20 +81,33 @@ public class CubeGlouton : MonoBehaviour
         if (isAttachedToWall) return;
 
         float currentVitesse = isSprinting ? vitesseAugmentee : vitesse;
-        float moveX = Input.GetAxis("Horizontal") * currentVitesse;
-        float moveZ = Input.GetAxis("Vertical") * currentVitesse;
+        float moveHorizontal = Input.GetAxis("Horizontal");
+        float moveVertical = Input.GetAxis("Vertical");
 
-        Vector3 movement = new Vector3(moveX, 0, moveZ) * Time.fixedDeltaTime;
+        Vector3 direction = new Vector3(moveHorizontal, 0.0f, moveVertical).normalized;
 
-        if (isPropelling)
+        if (direction.magnitude >= 0.1f)
         {
-            rb.AddForce(movement, ForceMode.Acceleration);
-        }
-        else
-        {
-            rb.MovePosition(rb.position + movement);
+            float cibleAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + Camera.main.transform.eulerAngles.y;
+            Vector3 moveDir = Quaternion.Euler(0f, cibleAngle, 0f) * Vector3.forward;
+
+            Vector3 movement = moveDir.normalized * currentVitesse * Time.fixedDeltaTime;
+
+            if (isPropelling)
+            {
+                rb.AddForce(movement * 50f, ForceMode.Acceleration);
+            }
+            else
+            {
+                rb.MovePosition(rb.position + movement);
+
+                Quaternion nouvelleRotation = Quaternion.Euler(0f, cibleAngle, 0f);
+                transform.rotation = Quaternion.Slerp(transform.rotation, nouvelleRotation, Time.fixedDeltaTime * 10f);
+            }
         }
     }
+
+
 
     private void OnCollisionEnter(Collision collision)
     {
