@@ -10,8 +10,12 @@ public class QuestManager : MonoBehaviour
     private int applesCollected = 0; 
     private int applesRequired = 3;  
     private bool questInProgress = false; 
-    private bool questCompleted = false;  
+    private bool questAlmostCompleted = false;  
 
+    public bool QuestAlmostCompleted
+    {
+        get { return questAlmostCompleted; }
+    }
     public bool QuestInProgress
     {
         get { return questInProgress; }
@@ -31,23 +35,24 @@ public class QuestManager : MonoBehaviour
             questText.gameObject.SetActive(true);
             questText.text = $"Quêtes en cours : {currentQuestDescription} {applesCollected}/{applesRequired}";
         }
+        else if (questAlmostCompleted)
+        {
+            questText.gameObject.SetActive(true);  
+            questText.text = "Quêtes en cours : veuillez parler au PNJ";
+        }
         else
         {
             questText.gameObject.SetActive(false);
         }
-
-        if (questCompleted)
-        {
-            questText.text = "Quêtes en cours : veuillez parler au PNJ";
-        }
     }
+
 
     public void StartQuest(string questDescription)
     {
         currentQuestDescription = questDescription;
         questInProgress = true;
         applesCollected = 0;  
-        questCompleted = false;
+        questAlmostCompleted = false;
     }
 
 
@@ -58,7 +63,7 @@ public class QuestManager : MonoBehaviour
             applesCollected++;
             if (applesCollected >= applesRequired)
             {
-                questCompleted = true;
+                questAlmostCompleted = true;
                 questInProgress = false; 
             }
         }
@@ -68,6 +73,6 @@ public class QuestManager : MonoBehaviour
     {
         questInProgress = false;
         applesCollected = 0;
-        questCompleted = false;
+        questAlmostCompleted = false;
     }
 }
