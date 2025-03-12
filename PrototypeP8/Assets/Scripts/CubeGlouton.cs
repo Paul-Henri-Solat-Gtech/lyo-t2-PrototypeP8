@@ -22,7 +22,7 @@ public class CubeGlouton : MonoBehaviour
 
     private int jumpLeft = 2;
 
-    public AudioClip sonMiam;
+    public AudioClip eatingSound;
     public AudioClip jumpSound;
     public AudioClip fallSound;
     public AudioClip attachSound;
@@ -127,6 +127,8 @@ public class CubeGlouton : MonoBehaviour
     {
         isAttachedToWall = true;
         attachDirection = collisionNormal;
+        rb.isKinematic = false;
+        ResetVelocity();
         rb.isKinematic = true;
         if (attachSound != null)
         {
@@ -147,7 +149,7 @@ public class CubeGlouton : MonoBehaviour
 
     private void ResetVelocity()
     {
-        //rb.linearVelocity = Vector3.zero;
+        rb.velocity = Vector3.zero;
     }
 
     private IEnumerator InvulnerabilityPeriod()
@@ -170,9 +172,9 @@ public class CubeGlouton : MonoBehaviour
             transform.localScale += new Vector3(tailleAugmentee, tailleAugmentee, tailleAugmentee);
             vitesse += 1;
             vitesseAugmentee += 1;
-            if (sonMiam != null)
+            if (eatingSound != null)
             {
-                audioSource.PlayOneShot(sonMiam);
+                audioSource.PlayOneShot(eatingSound);
             }
 
             other.GetComponent<Nourriture>().Respawn();
@@ -182,9 +184,9 @@ public class CubeGlouton : MonoBehaviour
             transform.localScale -= new Vector3(tailleAugmentee, tailleAugmentee, tailleAugmentee);
             vitesse += 1;
             vitesseAugmentee += 1;
-            if (sonMiam != null)
+            if (eatingSound != null)
             {
-                audioSource.PlayOneShot(sonMiam);
+                audioSource.PlayOneShot(eatingSound);
             }
 
             other.GetComponent<Nourriture>().Respawn();
