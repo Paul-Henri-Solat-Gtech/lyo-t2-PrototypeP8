@@ -9,6 +9,7 @@ public class PNJ : MonoBehaviour
     private int index = 0;
     private bool isPlayerNear = false;
 
+
     void Update()
     {
         if (isPlayerNear && Input.GetKeyDown(KeyCode.E))
@@ -39,6 +40,11 @@ public class PNJ : MonoBehaviour
         {
             dialogueText.text = dialogues[index];
         }
+/*        if (index == dialogues.Length - 1)
+        {
+            QuestManager.instance.StartQuest();
+        }*/
+
         else
         {
             EndDialogue();
