@@ -7,6 +7,11 @@ public class ItemManager : MonoBehaviour
     private GameObject player;
     private Inventory playerInventory;
 
+    [SerializeField]
+    private Item item;
+
+    public void SetItem(Item value) { item = value; }
+
     // Start is called before the first frame update
     void Start()
     {
