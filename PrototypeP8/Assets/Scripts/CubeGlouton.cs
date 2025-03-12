@@ -17,6 +17,7 @@ public class CubeGlouton : MonoBehaviour
     private bool isAttachedToWall;
     private bool canDetach;
     private bool isInvulnerable;
+    private bool isPropelling;
     private Vector3 attachDirection;
 
     private int jumpLeft = 2;
@@ -37,6 +38,7 @@ public class CubeGlouton : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         canDetach = true;
         isInvulnerable = false;
+        isPropelling = false;
     }
 
     void Update()
@@ -60,9 +62,8 @@ public class CubeGlouton : MonoBehaviour
         {
             Jump();
             isGrounded = false;
-            jumpLeft--; 
+            jumpLeft--;
         }
-
 
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
@@ -84,7 +85,15 @@ public class CubeGlouton : MonoBehaviour
         float moveZ = Input.GetAxis("Vertical") * currentVitesse;
 
         Vector3 movement = new Vector3(moveX, 0, moveZ) * Time.fixedDeltaTime;
-        rb.MovePosition(rb.position + movement);
+
+        if (isPropelling)
+        {
+            rb.AddForce(movement, ForceMode.Acceleration);
+        }
+        else
+        {
+            rb.MovePosition(rb.position + movement);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -94,8 +103,9 @@ public class CubeGlouton : MonoBehaviour
             isGrounded = true;
             jumpLeft = 2;
             ResetVelocity();
-            if (fallSound != null) { 
-            audioSource.PlayOneShot(fallSound);
+            if (fallSound != null)
+            {
+                audioSource.PlayOneShot(fallSound);
             }
         }
         else if (collision.gameObject.CompareTag("Wall") && !isInvulnerable)
@@ -107,8 +117,9 @@ public class CubeGlouton : MonoBehaviour
     private void Jump()
     {
         rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
-        if (jumpSound != null) { 
-        audioSource.PlayOneShot(jumpSound);
+        if (jumpSound != null)
+        {
+            audioSource.PlayOneShot(jumpSound);
         }
     }
 
@@ -127,9 +138,11 @@ public class CubeGlouton : MonoBehaviour
     {
         isAttachedToWall = false;
         rb.isKinematic = false;
+        isPropelling = true;
         Vector3 detachForce = attachDirection * additionalVelocity + Vector3.up * (jumpPower + additionalJumpPower);
         rb.AddForce(detachForce, ForceMode.Impulse);
         StartCoroutine(InvulnerabilityPeriod());
+        StartCoroutine(EndPropulsion());
     }
 
     private void ResetVelocity()
@@ -142,6 +155,12 @@ public class CubeGlouton : MonoBehaviour
         isInvulnerable = true;
         yield return new WaitForSeconds(invulnerabilityTime);
         isInvulnerable = false;
+    }
+
+    private IEnumerator EndPropulsion()
+    {
+        yield return new WaitForSeconds(0.2f);
+        isPropelling = false;
     }
 
     private void OnTriggerEnter(Collider other)
