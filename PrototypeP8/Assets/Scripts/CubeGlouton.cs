@@ -7,7 +7,7 @@ public class CubeGlouton : MonoBehaviour
     public float vitesseAugmentee = 10f;
     public float tailleAugmentee = 0.1f;
     public float jumpPower = 5f;
-    public float invulnerabilityTime = 0.5f;
+    public float invulnerabilityTime = 0.0f;
     public float additionalVelocity = 4f;
     public float additionalJumpPower = 1.5f;
     private Rigidbody rb;
@@ -22,6 +22,9 @@ public class CubeGlouton : MonoBehaviour
     private int jumpLeft = 2;
 
     public AudioClip sonMiam;
+    public AudioClip jumpSound;
+    public AudioClip fallSound;
+    public AudioClip attachSound;
 
     public bool IsSprinting
     {
@@ -91,6 +94,9 @@ public class CubeGlouton : MonoBehaviour
             isGrounded = true;
             jumpLeft = 2;
             ResetVelocity();
+            if (fallSound != null) { 
+            audioSource.PlayOneShot(fallSound);
+            }
         }
         else if (collision.gameObject.CompareTag("Wall") && !isInvulnerable)
         {
@@ -101,6 +107,9 @@ public class CubeGlouton : MonoBehaviour
     private void Jump()
     {
         rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
+        if (jumpSound != null) { 
+        audioSource.PlayOneShot(jumpSound);
+        }
     }
 
     private void AttachToWall(Vector3 collisionNormal)
@@ -108,6 +117,10 @@ public class CubeGlouton : MonoBehaviour
         isAttachedToWall = true;
         attachDirection = collisionNormal;
         rb.isKinematic = true;
+        if (attachSound != null)
+        {
+            audioSource.PlayOneShot(attachSound);
+        }
     }
 
     private void DetachFromWall()
