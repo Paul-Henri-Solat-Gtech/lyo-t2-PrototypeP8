@@ -13,10 +13,13 @@ public class ObjectProperty : MonoBehaviour
     private new string name = "noName";
     [SerializeField]
     private Texture2D image;
+    [SerializeField]
+    private float size = 1f;
 
     public Item.Type GetObjectType() { return type; }
     public string GetObjectName() { return name; }
     public Texture2D GetObjectImage() { return image; }
+    public float GetObjectSize() { return size; }
 
     // Start is called before the first frame update
     void Start()

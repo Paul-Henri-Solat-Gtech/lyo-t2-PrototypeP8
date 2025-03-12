@@ -23,13 +23,16 @@ public class Item
     public string name;
     public Type type;
     public Texture2D image;
+    public float size;
 
     public string GetName() { return name; }
     public new Type GetType() { return type; }
     public Texture2D GetImage() { return image; }
+    public float GetSize() { return size; }
     public void SetName(string value) { name = value; }
     public void SetType(Type value) { type = value; }
     public void SetImage(Texture2D value) { image = value; }
+    public void SetSize(float value) { size = value; }
 }
 
 public class Inventory : MonoBehaviour
@@ -54,22 +57,48 @@ public class Inventory : MonoBehaviour
     [SerializeField]
     private float sizeUp = 0.1f;
     [SerializeField]
-    private float dropForce = 5f;
+    private float dropForce = 50f;
+
+    [SerializeField]
+    private TMP_Text lifeText;
+
+    private int life, maxLife;
 
     public List<Item> GetInventoryPlayer() { return absorbedObjectList; }
 
     // Start is called before the first frame update
     void Start()
     {
+        maxLife = 5;
+        life = maxLife;
         inventoryScreen.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
+        lifeText.text = life + " / " + maxLife;
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             InventoryUIManager();
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            if (absorbedObjectList.Count > 0)
+            {
+                int randomIndex = Random.Range(0, absorbedObjectList.Count);
+
+                DropItem(absorbedObjectList[randomIndex]);
+
+                //absorbedObjectList.RemoveAt(randomIndex);
+
+                if (absorbedObjectList.Count == 0)
+                {
+                    return;
+                    //Debug.Log("La liste est maintenant vide !");
+                }
+            }
         }
     }
 
@@ -124,10 +153,22 @@ public class Inventory : MonoBehaviour
             {
                 Vector3 newPos = transform.position;
                 newPos.z += 3 + transform.localScale.x;
-                GameObject newDroppedObject = Instantiate(prefabs.GetPrefab(), newPos, Quaternion.identity);
-                newDroppedObject.GetComponent<Rigidbody>().AddForce(Vector3.forward * dropForce, ForceMode.Impulse);
 
+                GameObject newDroppedObject = Instantiate(prefabs.GetPrefab(), newPos, Quaternion.identity);
+
+                if (item.GetType() == Item.Type.Projectile)
+                {
+                    Rigidbody newRb = newDroppedObject.GetComponent<Rigidbody>();
+                    if (newRb != null)
+                    {
+                        newRb.AddForce(Vector3.forward * dropForce, ForceMode.Impulse);
+                    }
+                }
+
+                transform.localScale -= new Vector3(sizeUp, sizeUp, sizeUp);
                 GetInventoryPlayer().Remove(item);
+                maxLife -= 5;
+                life = maxLife;
             }
         }
     }
@@ -136,7 +177,7 @@ public class Inventory : MonoBehaviour
     {
         if (other.CompareTag("ObjectToAbsorb"))
         {
-            if (other.transform.localScale.x <= transform.localScale.x)
+            if (other.GetComponent<ObjectProperty>().GetObjectSize() <= transform.localScale.x)
             {
                 ObjectProperty newObjectProperty = other.GetComponent<ObjectProperty>();
 
@@ -144,12 +185,18 @@ public class Inventory : MonoBehaviour
                 newItem.SetName(newObjectProperty.GetObjectName());
                 newItem.SetType(newObjectProperty.GetObjectType());
                 newItem.SetImage(newObjectProperty.GetObjectImage());
+                newItem.SetSize(newObjectProperty.GetObjectSize());
 
                 absorbedObjectList.Add(newItem);
                 GameObject.Destroy(other.GameObject());
                 GameObject.Destroy(other.transform.parent.GameObject());
 
                 transform.localScale += new Vector3(sizeUp, sizeUp, sizeUp);
+                maxLife += 5;
+                if (life == maxLife - 5)
+                {
+                    life = maxLife;
+                }
             }
         }
     }

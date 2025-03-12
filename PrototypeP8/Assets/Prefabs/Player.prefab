@@ -170,4 +170,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   absorbedObjectList: []
+  prefabsList:
+  - name: Planche
+    prefab: {fileID: 3539530893433115730, guid: dd707aa2cda04d248821074d2afba55c, type: 3}
+  - name: Tree
+    prefab: {fileID: 7119942166094866583, guid: 0996d5754a28eaa4fa2270a5af8561d4, type: 3}
   inventoryScreen: {fileID: 0}
+  panelInventory: {fileID: 0}
+  itemFramePrefab: {fileID: 0}
+  sizeUp: 0.1
+  dropForce: 5
