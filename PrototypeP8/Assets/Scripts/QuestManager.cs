@@ -1,37 +1,73 @@
 using UnityEngine;
+using TMPro;
 
 public class QuestManager : MonoBehaviour
 {
     public static QuestManager instance;
-    private bool questAccepted = false;
-    private int applesCollected = 0;
-    private int applesRequired = 3;
 
+    public TextMeshProUGUI questText;  
+    private string currentQuestDescription = "";  
+    private int applesCollected = 0; 
+    private int applesRequired = 3;  
+    private bool questInProgress = false; 
+    private bool questCompleted = false;  
+
+    public bool QuestInProgress
+    {
+        get { return questInProgress; }
+    }
     void Awake()
     {
         if (instance == null)
+        {
             instance = this;
-        else
-            Destroy(gameObject);
+        }
     }
 
-    public void StartQuest()
+    void Update()
     {
-        questAccepted = true;
-        Debug.Log("Quête acceptée : Ramasse 3 pommes ");
+        if (questInProgress)
+        {
+            questText.gameObject.SetActive(true);
+            questText.text = $"Quêtes en cours : {currentQuestDescription} {applesCollected}/{applesRequired}";
+        }
+        else
+        {
+            questText.gameObject.SetActive(false);
+        }
+
+        if (questCompleted)
+        {
+            questText.text = "Quêtes en cours : veuillez parler au PNJ";
+        }
     }
+
+    public void StartQuest(string questDescription)
+    {
+        currentQuestDescription = questDescription;
+        questInProgress = true;
+        applesCollected = 0;  
+        questCompleted = false;
+    }
+
 
     public void CollectApple()
     {
-        if (questAccepted)
+        if (questInProgress && applesCollected < applesRequired)
         {
             applesCollected++;
-            Debug.Log($"Pommes collectées : {applesCollected}/{applesRequired}");
-
             if (applesCollected >= applesRequired)
             {
-                Debug.Log("Quête terminée  Retourne voir le PNJ.");
+                questCompleted = true;
+                questInProgress = false; 
             }
         }
+    }
+
+    public void ResetQuest()
+    {
+        questInProgress = false;
+        applesCollected = 0;
+        questCompleted = false;
     }
 }

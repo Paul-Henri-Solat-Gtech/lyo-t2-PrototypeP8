@@ -1,14 +1,13 @@
 using UnityEngine;
-using TMPro; 
+using TMPro;
 
 public class PNJ : MonoBehaviour
 {
-    public GameObject dialogueUI;  
-    public TextMeshProUGUI dialogueText;  
-    public string[] dialogues;  
+    public GameObject dialogueUI;
+    public TextMeshProUGUI dialogueText;
+    public string[] dialogues;
     private int index = 0;
     private bool isPlayerNear = false;
-
 
     void Update()
     {
@@ -40,11 +39,13 @@ public class PNJ : MonoBehaviour
         {
             dialogueText.text = dialogues[index];
         }
-/*        if (index == dialogues.Length - 1)
+        else if (index == dialogues.Length - 1 && QuestManager.instance != null)
         {
-            QuestManager.instance.StartQuest();
-        }*/
-
+            if (!QuestManager.instance.QuestInProgress)
+            {
+                QuestManager.instance.StartQuest("Récolter 3 pommes");
+            }
+        }
         else
         {
             EndDialogue();

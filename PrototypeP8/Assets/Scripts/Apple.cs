@@ -6,8 +6,8 @@ public class Apple : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            QuestManager.instance.CollectApple();
-            Destroy(gameObject);
+            QuestManager.instance.CollectApple(); 
+            Destroy(gameObject);  
         }
     }
 }
