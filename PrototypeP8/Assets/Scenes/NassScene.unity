@@ -1075,7 +1075,10 @@ MonoBehaviour:
   invulnerabilityTime: 0.5
   additionalVelocity: 4
   additionalJumpPower: 1.5
-  sonMiam: {fileID: 0}
+  sonMiam: {fileID: 8300000, guid: e6dc2613673df2e41b14b0361bfae1ab, type: 3}
+  jumpSound: {fileID: 8300000, guid: 7c093a5161508174ead0488daf12a318, type: 3}
+  fallSound: {fileID: 8300000, guid: 67eb9750d9e663c4cbf2d8aa4accb543, type: 3}
+  attachSound: {fileID: 8300000, guid: 35a426c88d61fad46bac72a172954b95, type: 3}
 --- !u!65 &914071927
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1220,7 +1223,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: e6dc2613673df2e41b14b0361bfae1ab, type: 3}
   m_Resource: {fileID: 8300000, guid: e6dc2613673df2e41b14b0361bfae1ab, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -2423,7 +2426,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: e6dc2613673df2e41b14b0361bfae1ab, type: 3}
   m_Resource: {fileID: 8300000, guid: e6dc2613673df2e41b14b0361bfae1ab, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
