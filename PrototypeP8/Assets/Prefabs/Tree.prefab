@@ -415,6 +415,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   name: Tree
+  image: {fileID: 2800000, guid: 9f9ee08213a57b848b6236ae4b015b58, type: 3}
+  prefab: {fileID: 7119942166094866583}
 --- !u!1 &8712647619484590753
 GameObject:
   m_ObjectHideFlags: 0

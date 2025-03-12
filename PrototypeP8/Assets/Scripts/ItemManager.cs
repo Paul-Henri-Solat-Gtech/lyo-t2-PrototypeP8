@@ -25,6 +25,12 @@ public class ItemManager : MonoBehaviour
         
     }
 
+    public void UseItem()
+    {
+        playerInventory.DropItem(item);
+        CloseInventory();
+    }
+
     public void CloseInventory()
     {
         if (player != null)

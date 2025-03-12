@@ -12,11 +12,11 @@ public class ObjectProperty : MonoBehaviour
     [SerializeField]
     private new string name = "noName";
     [SerializeField]
-    private RawImage image;
+    private Texture2D image;
 
     public Item.Type GetObjectType() { return type; }
     public string GetObjectName() { return name; }
-    public RawImage GetObjectImage() { return image; }
+    public Texture2D GetObjectImage() { return image; }
 
     // Start is called before the first frame update
     void Start()

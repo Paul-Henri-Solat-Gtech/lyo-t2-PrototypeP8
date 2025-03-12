@@ -114,7 +114,7 @@ public class CubeGlouton : MonoBehaviour
     {
         isAttachedToWall = false;
         rb.isKinematic = false;
-        Vector3 detachForce = -attachDirection * additionalVelocity + Vector3.up * (jumpPower + additionalJumpPower);
+        Vector3 detachForce = attachDirection * additionalVelocity + Vector3.up * (jumpPower + additionalJumpPower);
         rb.AddForce(detachForce, ForceMode.Impulse);
         StartCoroutine(InvulnerabilityPeriod());
     }
