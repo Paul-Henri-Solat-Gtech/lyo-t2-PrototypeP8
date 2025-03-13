@@ -5,9 +5,9 @@ public class CubeGlouton : MonoBehaviour
 {
     public float vitesse = 5f;
     public float vitesseAugmentee = 10f;
-    public float tailleAugmentee = 0.1f;
+    public float tailleAugmentee = 1.0f;
     public float jumpPower = 5f;
-    public float invulnerabilityTime = 0.5f;
+    public float invulnerabilityTime = 0.0f;
     public float additionalVelocity = 4f;
     public float additionalJumpPower = 1.5f;
     private Rigidbody rb;
@@ -17,11 +17,15 @@ public class CubeGlouton : MonoBehaviour
     private bool isAttachedToWall;
     private bool canDetach;
     private bool isInvulnerable;
+    private bool isPropelling;
     private Vector3 attachDirection;
 
     private int jumpLeft = 2;
 
-    public AudioClip sonMiam;
+    public AudioClip eatingSound;
+    public AudioClip jumpSound;
+    public AudioClip fallSound;
+    public AudioClip attachSound;
 
     public bool IsSprinting
     {
@@ -34,6 +38,7 @@ public class CubeGlouton : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         canDetach = true;
         isInvulnerable = false;
+        isPropelling = false;
     }
 
     void Update()
@@ -57,9 +62,8 @@ public class CubeGlouton : MonoBehaviour
         {
             Jump();
             isGrounded = false;
-            jumpLeft--; 
+            jumpLeft--;
         }
-
 
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
@@ -77,12 +81,33 @@ public class CubeGlouton : MonoBehaviour
         if (isAttachedToWall) return;
 
         float currentVitesse = isSprinting ? vitesseAugmentee : vitesse;
-        float moveX = Input.GetAxis("Horizontal") * currentVitesse;
-        float moveZ = Input.GetAxis("Vertical") * currentVitesse;
+        float moveHorizontal = Input.GetAxis("Horizontal");
+        float moveVertical = Input.GetAxis("Vertical");
 
-        Vector3 movement = new Vector3(moveX, 0, moveZ) * Time.fixedDeltaTime;
-        rb.MovePosition(rb.position + movement);
+        Vector3 direction = new Vector3(moveHorizontal, 0.0f, moveVertical).normalized;
+
+        if (direction.magnitude >= 0.1f)
+        {
+            float cibleAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + Camera.main.transform.eulerAngles.y;
+            Vector3 moveDir = Quaternion.Euler(0f, cibleAngle, 0f) * Vector3.forward;
+
+            Vector3 movement = moveDir.normalized * currentVitesse * Time.fixedDeltaTime;
+
+            if (isPropelling)
+            {
+                rb.AddForce(movement * 50f, ForceMode.Acceleration);
+            }
+            else
+            {
+                rb.MovePosition(rb.position + movement);
+
+                Quaternion nouvelleRotation = Quaternion.Euler(0f, cibleAngle, 0f);
+                transform.rotation = Quaternion.Slerp(transform.rotation, nouvelleRotation, Time.fixedDeltaTime * 10f);
+            }
+        }
     }
+
+
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -91,6 +116,10 @@ public class CubeGlouton : MonoBehaviour
             isGrounded = true;
             jumpLeft = 2;
             ResetVelocity();
+            if (fallSound != null)
+            {
+                audioSource.PlayOneShot(fallSound);
+            }
         }
         else if (collision.gameObject.CompareTag("Wall") && !isInvulnerable)
         {
@@ -101,27 +130,39 @@ public class CubeGlouton : MonoBehaviour
     private void Jump()
     {
         rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
+        if (jumpSound != null)
+        {
+            audioSource.PlayOneShot(jumpSound);
+        }
     }
 
     private void AttachToWall(Vector3 collisionNormal)
     {
         isAttachedToWall = true;
         attachDirection = collisionNormal;
+        rb.isKinematic = false;
+        ResetVelocity();
         rb.isKinematic = true;
+        if (attachSound != null)
+        {
+            audioSource.PlayOneShot(attachSound);
+        }
     }
 
     private void DetachFromWall()
     {
         isAttachedToWall = false;
         rb.isKinematic = false;
+        isPropelling = true;
         Vector3 detachForce = attachDirection * additionalVelocity + Vector3.up * (jumpPower + additionalJumpPower);
         rb.AddForce(detachForce, ForceMode.Impulse);
         StartCoroutine(InvulnerabilityPeriod());
+        StartCoroutine(EndPropulsion());
     }
 
     private void ResetVelocity()
     {
-        //rb.linearVelocity = Vector3.zero;
+        rb.velocity = Vector3.zero;
     }
 
     private IEnumerator InvulnerabilityPeriod()
@@ -131,16 +172,21 @@ public class CubeGlouton : MonoBehaviour
         isInvulnerable = false;
     }
 
+    private IEnumerator EndPropulsion()
+    {
+        yield return new WaitForSeconds(0.2f);
+        isPropelling = false;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("FoodTall"))
         {
             transform.localScale += new Vector3(tailleAugmentee, tailleAugmentee, tailleAugmentee);
-            vitesse += 1;
-            vitesseAugmentee += 1;
-            if (sonMiam != null)
+
+            if (eatingSound != null)
             {
-                audioSource.PlayOneShot(sonMiam);
+                audioSource.PlayOneShot(eatingSound);
             }
 
             other.GetComponent<Nourriture>().Respawn();
@@ -148,11 +194,9 @@ public class CubeGlouton : MonoBehaviour
         if (other.CompareTag("FoodSmall") && transform.localScale.x > 0.1)
         {
             transform.localScale -= new Vector3(tailleAugmentee, tailleAugmentee, tailleAugmentee);
-            vitesse += 1;
-            vitesseAugmentee += 1;
-            if (sonMiam != null)
+            if (eatingSound != null)
             {
-                audioSource.PlayOneShot(sonMiam);
+                audioSource.PlayOneShot(eatingSound);
             }
 
             other.GetComponent<Nourriture>().Respawn();
