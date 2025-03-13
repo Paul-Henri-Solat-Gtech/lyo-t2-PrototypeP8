@@ -283,7 +283,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.22, z: 0}
-  m_LocalScale: {x: 1, y: 0.8229901, z: 1}
+  m_LocalScale: {x: 1, y: 1.0158991, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 863351124853705061}
@@ -367,7 +367,7 @@ Transform:
   m_GameObject: {fileID: 7119942166094866583}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.74, y: 0.47, z: 5.62}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -416,7 +416,7 @@ MonoBehaviour:
   type: 0
   name: Tree
   image: {fileID: 2800000, guid: 9f9ee08213a57b848b6236ae4b015b58, type: 3}
-  prefab: {fileID: 7119942166094866583}
+  size: 1.2
 --- !u!1 &8712647619484590753
 GameObject:
   m_ObjectHideFlags: 0
