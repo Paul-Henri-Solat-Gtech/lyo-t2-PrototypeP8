@@ -5,7 +5,7 @@ public class CameraFollow : MonoBehaviour
     public Transform cible;
     public float distanceBase = 2.0f;
     public float hauteur = 2.0f;
-    public float sensibilitéRotation = 5.0f;
+    public float sensibiliteRotation = 5.0f;
     private float rotationY = 0.0f;
     private float rotationX = 0.0f;
 
@@ -19,8 +19,8 @@ public class CameraFollow : MonoBehaviour
 
     void LateUpdate()
     {
-        rotationY += Input.GetAxis("Mouse X") * sensibilitéRotation;
-        rotationX -= Input.GetAxis("Mouse Y") * sensibilitéRotation;
+        rotationY += Input.GetAxis("Mouse X") * sensibiliteRotation;
+        rotationX -= Input.GetAxis("Mouse Y") * sensibiliteRotation;
         rotationX = Mathf.Clamp(rotationX, -20f, 80f); 
 
         Quaternion rotation = Quaternion.Euler(rotationX, rotationY, 0);

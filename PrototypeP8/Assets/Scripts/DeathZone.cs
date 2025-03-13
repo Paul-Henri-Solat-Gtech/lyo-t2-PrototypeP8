@@ -17,7 +17,7 @@ public class DeathZone : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("CubeGlouton"))
+        if (other.CompareTag("Player"))
         {
             if (GameObject.Find("SpawnPlayer") != null)
             {

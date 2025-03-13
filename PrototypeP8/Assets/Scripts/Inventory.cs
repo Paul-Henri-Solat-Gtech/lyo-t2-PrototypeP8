@@ -118,8 +118,8 @@ public class Inventory : MonoBehaviour
         {
             inventoryScreen.gameObject.SetActive(true);
             InventoryOpen();
+            Cursor.lockState = CursorLockMode.None;
             inventoryIsOpen = true;
-  
         }
         else
         {
@@ -176,8 +176,7 @@ public class Inventory : MonoBehaviour
         {
             if (item.GetName() == prefabs.GetName())
             {
-                Vector3 newPos = transform.position;
-                newPos.z += 3 + transform.localScale.x;
+                Vector3 newPos = transform.position + transform.forward * (3 + transform.localScale.x);
 
                 GameObject newDroppedObject = Instantiate(prefabs.GetPrefab(), newPos, Quaternion.identity);
 
@@ -186,7 +185,7 @@ public class Inventory : MonoBehaviour
                     Rigidbody newRb = newDroppedObject.GetComponent<Rigidbody>();
                     if (newRb != null)
                     {
-                        newRb.AddForce(Vector3.forward * dropForce, ForceMode.Impulse);
+                        newRb.AddForce(transform.forward * dropForce, ForceMode.Impulse);
                     }
                 }
 

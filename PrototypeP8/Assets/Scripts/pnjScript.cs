@@ -68,8 +68,8 @@ public class PNJ : MonoBehaviour
             {
                 if (!QuestManager.instance.QuestInProgress)
                 {
-                    QuestManager.instance.StartQuest("Récolter 3 pommes");
-                    Debug.Log("Quête démarrée !");
+                    QuestManager.instance.StartQuest("Recolter 3 pommes");
+                    Debug.Log("Quete demarrer !");
                 }
                 EndDialogue();
             }

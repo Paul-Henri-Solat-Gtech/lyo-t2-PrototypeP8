@@ -1377,9 +1377,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cible: {fileID: 313068909}
-  normalFOV: 60
-  offset: {x: 0, y: 3, z: -3}
-  sprintFOV: 90
+  distanceBase: 2
+  hauteur: 2
+  sensibiliteRotation: 5
 --- !u!1 &968047949
 GameObject:
   m_ObjectHideFlags: 0
@@ -1784,6 +1784,10 @@ PrefabInstance:
       objectReference: {fileID: 1832618489}
     - target: {fileID: 8774167683169099270, guid: 92d7c0d27c38fab44bb4d51af5548a0e, type: 3}
       propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 8774167683169099270, guid: 92d7c0d27c38fab44bb4d51af5548a0e, type: 3}
+      propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -33,12 +33,12 @@ public class QuestManager : MonoBehaviour
         if (questInProgress)
         {
             questText.gameObject.SetActive(true);
-            questText.text = $"Quêtes en cours : {currentQuestDescription} {applesCollected}/{applesRequired}";
+            questText.text = $"Quetes en cours : {currentQuestDescription} {applesCollected}/{applesRequired}";
         }
         else if (questAlmostCompleted)
         {
             questText.gameObject.SetActive(true);  
-            questText.text = "Quêtes en cours : veuillez parler au PNJ";
+            questText.text = "Quetes en cours : veuillez parler au PNJ";
         }
         else
         {
