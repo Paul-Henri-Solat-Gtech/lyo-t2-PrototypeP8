@@ -61,8 +61,13 @@ public class Inventory : MonoBehaviour
 
     [SerializeField]
     private TMP_Text lifeText;
+    [SerializeField]
+    private TMP_Text eatStatusText;
 
     private int life, maxLife;
+
+    [SerializeField]
+    private bool canEat;
 
     public List<Item> GetInventoryPlayer() { return absorbedObjectList; }
 
@@ -71,6 +76,7 @@ public class Inventory : MonoBehaviour
     {
         maxLife = 5;
         life = maxLife;
+        canEat = false;
         inventoryScreen.gameObject.SetActive(false);
     }
 
@@ -100,6 +106,10 @@ public class Inventory : MonoBehaviour
                 }
             }
         }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            EatManager();
+        }
     }
 
     public void InventoryUIManager()
@@ -116,6 +126,21 @@ public class Inventory : MonoBehaviour
             InventoryClose();
             inventoryScreen.gameObject.SetActive(false);
             inventoryIsOpen = false;
+        }
+    }
+    public void EatManager()
+    {
+        if (!canEat)
+        {
+            canEat = true;
+            eatStatusText.text = "EatMode : ON";
+            eatStatusText.color = Color.green;
+        }
+        else
+        {
+            canEat = false;
+            eatStatusText.text = "EatMode : OFF";
+            eatStatusText.color = Color.red;
         }
     }
 
@@ -175,7 +200,7 @@ public class Inventory : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("ObjectToAbsorb"))
+        if (other.CompareTag("ObjectToAbsorb") && canEat)
         {
             if (other.GetComponent<ObjectProperty>().GetObjectSize() <= transform.localScale.x)
             {
