@@ -1859,6 +1859,7 @@ MonoBehaviour:
   itemFramePrefab: {fileID: 0}
   sizeUp: 0.1
   dropForce: 5
+  lifeText: {fileID: 0}
 --- !u!82 &914071933
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2062,9 +2063,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cible: {fileID: 914071930}
-  normalFOV: 60
-  offset: {x: 0, y: 3, z: -3}
-  sprintFOV: 90
+  distanceBase: 5
+  hauteur: 2
+  sensibiliteRotation: 5
 --- !u!1 &968047949
 GameObject:
   m_ObjectHideFlags: 0
@@ -2316,6 +2317,7 @@ GameObject:
   - component: {fileID: 1095857741}
   - component: {fileID: 1095857740}
   - component: {fileID: 1095857739}
+  - component: {fileID: 1095857744}
   m_Layer: 0
   m_Name: pnj
   m_TagString: Untagged
@@ -2346,6 +2348,9 @@ MonoBehaviour:
   - Merci pour ces pommes smiley
   - "Tu m\xE9rites bien une information importante"
   - Je suis en fait depuis tout ce temps.. TON DARON
+  firstSound: {fileID: 8300000, guid: c269c9c3bd219934db27e9523ceb20fb, type: 3}
+  secondSound: {fileID: 8300000, guid: 2f9f6e36afb2b0642afa158e13a4b73c, type: 3}
+  thirdSound: {fileID: 8300000, guid: e7eaeadd48485f74da3a4f417e5cbe57, type: 3}
 --- !u!65 &1095857740
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2434,6 +2439,103 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &1095857744
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1095857738}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: c269c9c3bd219934db27e9523ceb20fb, type: 3}
+  m_Resource: {fileID: 8300000, guid: c269c9c3bd219934db27e9523ceb20fb, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1001 &1139128895
 PrefabInstance:
   m_ObjectHideFlags: 0

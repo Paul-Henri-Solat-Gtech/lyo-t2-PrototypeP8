@@ -7,8 +7,19 @@ public class PNJ : MonoBehaviour
     public TextMeshProUGUI dialogueText;
     public string[] dialogues;
     public string[] dialoguesCompleted;
+    public AudioClip firstSound;
+    public AudioClip secondSound;
+    public AudioClip thirdSound;
+    private AudioSource audioSource;
     private int index = 0;
     private bool isPlayerNear = false;
+    private bool secondSoundPlayed = false;
+    private bool firstSoundPlayed = false;
+
+    void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     void Update()
     {
@@ -29,6 +40,8 @@ public class PNJ : MonoBehaviour
     void StartDialogue()
     {
         index = 0;
+        secondSoundPlayed = false;
+        firstSoundPlayed = false;
         dialogueUI.SetActive(true);
 
         if (QuestManager.instance != null && QuestManager.instance.QuestAlmostCompleted)
@@ -39,18 +52,26 @@ public class PNJ : MonoBehaviour
         {
             dialogueText.text = dialogues[index];
         }
-    }
 
+        if (firstSound != null && audioSource != null && !firstSoundPlayed)
+        {
+            audioSource.PlayOneShot(firstSound);
+            firstSoundPlayed = true;
+        }
+    }
 
     void NextDialogue()
     {
         index++;
+
+        bool dialogueInProgress = false;
 
         if (QuestManager.instance != null && QuestManager.instance.QuestAlmostCompleted)
         {
             if (index < dialoguesCompleted.Length)
             {
                 dialogueText.text = dialoguesCompleted[index];
+                dialogueInProgress = true;
             }
             else
             {
@@ -63,19 +84,31 @@ public class PNJ : MonoBehaviour
             if (index < dialogues.Length)
             {
                 dialogueText.text = dialogues[index];
+                dialogueInProgress = true;
             }
             else
             {
                 if (!QuestManager.instance.QuestInProgress)
                 {
                     QuestManager.instance.StartQuest("Récolter 3 pommes");
-                    Debug.Log("Quête démarrée !");
                 }
                 EndDialogue();
             }
         }
-    }
 
+        if (dialogueInProgress && audioSource != null)
+        {
+            if (!secondSoundPlayed && secondSound != null)
+            {
+                audioSource.PlayOneShot(secondSound);
+                secondSoundPlayed = true;
+            }
+            else if (thirdSound != null)
+            {
+                audioSource.PlayOneShot(thirdSound);
+            }
+        }
+    }
 
     void EndDialogue()
     {
@@ -100,3 +133,7 @@ public class PNJ : MonoBehaviour
         }
     }
 }
+
+
+
+

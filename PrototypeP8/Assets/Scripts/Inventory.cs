@@ -77,7 +77,7 @@ public class Inventory : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        lifeText.text = life + " / " + maxLife;
+
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
