@@ -3,7 +3,7 @@ using UnityEngine;
 public class CameraFollow : MonoBehaviour
 {
     public Transform cible;
-    public float distance = 5.0f;
+    public float distanceBase = 2.0f;
     public float hauteur = 2.0f;
     public float sensibilitéRotation = 5.0f;
     private float rotationY = 0.0f;
@@ -24,7 +24,12 @@ public class CameraFollow : MonoBehaviour
         rotationX = Mathf.Clamp(rotationX, -20f, 80f); 
 
         Quaternion rotation = Quaternion.Euler(rotationX, rotationY, 0);
-        Vector3 position = cible.position - (rotation * Vector3.forward * distance) + Vector3.up * hauteur;
+
+
+        float tailleCube = cible.localScale.x;
+        float distanceAjustee = distanceBase + tailleCube;
+
+        Vector3 position = cible.position - (rotation * Vector3.forward * distanceAjustee) + Vector3.up * hauteur;
 
         transform.rotation = rotation;
         transform.position = position;

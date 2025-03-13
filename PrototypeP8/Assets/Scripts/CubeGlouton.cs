@@ -5,7 +5,7 @@ public class CubeGlouton : MonoBehaviour
 {
     public float vitesse = 5f;
     public float vitesseAugmentee = 10f;
-    public float tailleAugmentee = 0.1f;
+    public float tailleAugmentee = 1.0f;
     public float jumpPower = 5f;
     public float invulnerabilityTime = 0.0f;
     public float additionalVelocity = 4f;
@@ -183,8 +183,7 @@ public class CubeGlouton : MonoBehaviour
         if (other.CompareTag("FoodTall"))
         {
             transform.localScale += new Vector3(tailleAugmentee, tailleAugmentee, tailleAugmentee);
-            vitesse += 1;
-            vitesseAugmentee += 1;
+
             if (eatingSound != null)
             {
                 audioSource.PlayOneShot(eatingSound);
@@ -195,8 +194,6 @@ public class CubeGlouton : MonoBehaviour
         if (other.CompareTag("FoodSmall") && transform.localScale.x > 0.1)
         {
             transform.localScale -= new Vector3(tailleAugmentee, tailleAugmentee, tailleAugmentee);
-            vitesse += 1;
-            vitesseAugmentee += 1;
             if (eatingSound != null)
             {
                 audioSource.PlayOneShot(eatingSound);
