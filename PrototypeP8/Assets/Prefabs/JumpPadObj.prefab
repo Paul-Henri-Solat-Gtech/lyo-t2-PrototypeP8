@@ -168,6 +168,7 @@ GameObject:
   - component: {fileID: 3083586024938429530}
   - component: {fileID: 280364208787056450}
   - component: {fileID: 4795289353570938053}
+  - component: {fileID: 4848666110464942897}
   m_Layer: 0
   m_Name: JumpPadObj
   m_TagString: Ground
@@ -292,3 +293,16 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.0000001, y: 2, z: 1.0000002}
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!114 &4848666110464942897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7517008928577362685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8804404f1f7793449bd67931b7e10a77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpForce: 10

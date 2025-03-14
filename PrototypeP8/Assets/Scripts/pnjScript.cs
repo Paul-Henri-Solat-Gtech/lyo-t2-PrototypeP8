@@ -10,6 +10,13 @@ public class PNJ : MonoBehaviour
     private int index = 0;
     private bool isPlayerNear = false;
 
+    public GameObject reward;
+
+    private void Start()
+    {
+        reward.SetActive(false);
+    }
+
     void Update()
     {
         if (isPlayerNear && Input.GetKeyDown(KeyCode.E))
@@ -54,6 +61,7 @@ public class PNJ : MonoBehaviour
             }
             else
             {
+                reward.SetActive(true);
                 QuestManager.instance.ResetQuest();
                 EndDialogue();
             }

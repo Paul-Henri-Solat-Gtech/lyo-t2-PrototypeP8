@@ -11,6 +11,10 @@ public class ObjectSpawner : MonoBehaviour
     private float spawnPerSec;
     private float actualSpawnSec;
 
+    [SerializeField]
+    private int prefabLimit;
+    private int prefabLimitCount;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,14 +29,18 @@ public class ObjectSpawner : MonoBehaviour
 
     private void SpawnLoop()
     {
-        if (actualSpawnSec <= 0)
+        if (prefabLimit > prefabLimitCount || prefabLimit == 0)
         {
-            GameObject newSpawnedObject = Instantiate(prefabToSpawn, transform);
-            actualSpawnSec = spawnPerSec;
-        }
-        else
-        {
-            actualSpawnSec -= 1 * Time.deltaTime; 
+            if (actualSpawnSec <= 0)
+            {
+                GameObject newSpawnedObject = Instantiate(prefabToSpawn, transform);
+                prefabLimitCount++;
+                actualSpawnSec = spawnPerSec;
+            }
+            else
+            {
+                actualSpawnSec -= 1 * Time.deltaTime;
+            }
         }
     }
 }
