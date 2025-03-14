@@ -23,7 +23,7 @@ public class PNJ : MonoBehaviour
 
     void Update()
     {
-        if (isPlayerNear && Input.GetKeyDown(KeyCode.E))
+        if (isPlayerNear && Input.GetKeyDown(KeyCode.R))
         {
             dialogueUI.SetActive(true);
             if (!dialogueUI.activeInHierarchy)
