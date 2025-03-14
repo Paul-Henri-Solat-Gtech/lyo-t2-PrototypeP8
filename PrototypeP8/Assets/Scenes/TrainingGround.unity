@@ -4081,7 +4081,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cee1ec81dba5434d8be249224e525af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextSceneName: SampleScene
+  nextSceneName: NassScene
 --- !u!65 &1328659144
 BoxCollider:
   m_ObjectHideFlags: 0

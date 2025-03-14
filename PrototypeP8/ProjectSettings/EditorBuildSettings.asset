@@ -11,5 +11,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/NassScene.unity
+    guid: 8a8385213764e33499f6b23a69d71575
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
