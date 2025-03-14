@@ -12,9 +12,15 @@ public class PNJ : MonoBehaviour
 
     public GameObject reward;
 
+    public AudioClip firstSound;
+    public AudioClip secondSound;
+    public AudioClip thirdSound;
+    private AudioSource audioSource;
+
     private void Start()
     {
         reward.SetActive(false);
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -46,8 +52,9 @@ public class PNJ : MonoBehaviour
         {
             dialogueText.text = dialogues[index];
         }
-    }
 
+        PlaySound();
+    }
 
     void NextDialogue()
     {
@@ -82,8 +89,25 @@ public class PNJ : MonoBehaviour
                 EndDialogue();
             }
         }
+
+        PlaySound();
     }
 
+    void PlaySound()
+    {
+        if (index == 0 && firstSound != null)
+        {
+            audioSource.PlayOneShot(firstSound);
+        }
+        else if (index == 1 && secondSound != null)
+        {
+            audioSource.PlayOneShot(secondSound);
+        }
+        else if (thirdSound != null)
+        {
+            audioSource.PlayOneShot(thirdSound);
+        }
+    }
 
     void EndDialogue()
     {
