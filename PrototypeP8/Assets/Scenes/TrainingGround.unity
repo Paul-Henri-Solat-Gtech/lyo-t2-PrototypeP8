@@ -850,6 +850,10 @@ PrefabInstance:
       value: J'ai besoin de 3 pommes !
       objectReference: {fileID: 0}
     - target: {fileID: 8795358044646965443, guid: b1d08791994fe80499dfaaf51beb9c88, type: 3}
+      propertyPath: dialoguesCompleted.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8795358044646965443, guid: b1d08791994fe80499dfaaf51beb9c88, type: 3}
       propertyPath: 'dialoguesCompleted.Array.data[0]'
       value: ...
       objectReference: {fileID: 0}
@@ -860,6 +864,10 @@ PrefabInstance:
     - target: {fileID: 8795358044646965443, guid: b1d08791994fe80499dfaaf51beb9c88, type: 3}
       propertyPath: 'dialoguesCompleted.Array.data[2]'
       value: "Tiens voila ta r\xE9compense !"
+      objectReference: {fileID: 0}
+    - target: {fileID: 8795358044646965443, guid: b1d08791994fe80499dfaaf51beb9c88, type: 3}
+      propertyPath: 'dialoguesCompleted.Array.data[3]'
+      value: Va au fond pour continuer !
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
