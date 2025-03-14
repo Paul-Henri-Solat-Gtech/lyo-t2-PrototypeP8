@@ -6,6 +6,7 @@ public class CubeGlouton : MonoBehaviour
     public float vitesse = 5f;
     public float vitesseAugmentee = 10f;
     public float tailleAugmentee = 1.0f;
+    public float tailleSoustraite = 2.0f;
     public float jumpPower = 5f;
     public float invulnerabilityTime = 0.0f;
     public float additionalVelocity = 4f;
@@ -123,6 +124,7 @@ public class CubeGlouton : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Wall") && !isInvulnerable)
         {
+            jumpLeft = 2;
             AttachToWall(collision.contacts[0].normal);
         }
     }
@@ -189,17 +191,16 @@ public class CubeGlouton : MonoBehaviour
                 audioSource.PlayOneShot(eatingSound);
             }
 
-            other.GetComponent<Nourriture>().Respawn();
         }
         if (other.CompareTag("FoodSmall") && transform.localScale.x > 0.1)
         {
-            transform.localScale -= new Vector3(tailleAugmentee, tailleAugmentee, tailleAugmentee);
+            transform.localScale -= new Vector3(tailleSoustraite, tailleSoustraite, tailleSoustraite);
             if (eatingSound != null)
             {
                 audioSource.PlayOneShot(eatingSound);
             }
 
-            other.GetComponent<Nourriture>().Respawn();
+
         }
     }
 }
